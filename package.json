@@ -46,6 +46,7 @@
     "express": "^4.15.2",
     "express-handlebars": "^3.0.0",
     "morgan": "^1.8.1",
+    "node-fetch": "^2.6.1",
     "pg": "^6.1.5",
     "tslint": "^6.1.3"
   }

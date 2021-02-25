@@ -1,5 +1,12 @@
-<p>
-  With Typescript, ExpressJS etc!
-  hey
-  {{value}}
-</p>
+<div>
+  <div id="columns">
+    {{#each news}}
+      <div id="news-item">
+          <img src="{{urlToImage}}" />
+          <span id="news-title">{{title}}</span>
+          <p>{{description}}</p>
+          <button href="{{url}}" id="news-open" target="_blank">Read more</button>
+      </div>
+    {{/each}}
+  </div>
+</div>

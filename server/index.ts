@@ -6,7 +6,7 @@ import * as exphbs from "express-handlebars";
 import * as logger from "morgan";
 import * as path from "path";
 
-import HomeRouter from "./routes/HomeRouter";
+import Router from "./home";
 
 const app = express();
 
@@ -32,7 +32,7 @@ app.set("view engine", ".hbs");
 
 // Router configuration
 const router = express.Router();
-app.use("/", HomeRouter);
+app.use("/", Router);
 
 // Create web server
 const PORT = process.env.PORT || 3000;
