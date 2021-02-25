@@ -9,7 +9,7 @@ const fetchNews = async (search) => {
     `q=${search}&` +
     "from=2021-02-25&" +
     "sortBy=popularity&" +
-    "apiKey=fb7503d86b254f20a7acb7eedfdc855a";
+    `apiKey=${process.env.NEWS_API_KEY}`;
 
   const request = await fetch(url);
 
@@ -22,7 +22,7 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.get("/:search", async (req: Request, res: Response) => {
   const { search } = req.params;
-  const {articles:news} = await fetchNews(search)
+  const { articles: news } = await fetchNews(search);
   res.render("home", { search, news });
 });
 

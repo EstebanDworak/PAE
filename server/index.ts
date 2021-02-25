@@ -5,6 +5,9 @@ import * as express from "express";
 import * as exphbs from "express-handlebars";
 import * as logger from "morgan";
 import * as path from "path";
+import {config} from 'dotenv'
+
+config()
 
 import Router from "./home";
 
