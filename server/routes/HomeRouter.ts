@@ -1,22 +1,9 @@
-import { NextFunction, Request, Response, Router } from 'express'
+import {  Request, Response, Router } from 'express'
 
-class HomeRouter {
-  public router: Router
+const router = Router()
 
-  constructor() {
-    this.router = Router()
-    this.init()
-  }
+router.get("/" ,(req:Request,res:Response)=>{
+  res.render("home",{"value" :"hola popo"})
+})
 
-  public getHome(req: Request, res: Response, next: NextFunction) {
-    res
-    .status(200)
-    .render('home',{"value":"hellow world"})
-  }
-
-  public init() {
-    this.router.get('/', this.getHome)
-  }
-}
-
-export default new HomeRouter().router
+export default router

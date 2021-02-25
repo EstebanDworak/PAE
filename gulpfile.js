@@ -65,7 +65,7 @@ function watchServer() {
 gulp.task('watch', ['scripts', 'bundle', 'sass'], () => {
   watchServer()
   livereload.listen()
-  gulp.watch('client/src/**/*.ts', ['bundle'])
+  // gulp.watch('client/src/**/*.ts', ['bundle'])
   gulp.watch('client/sass/**/*.scss', ['sass'])
   gulp.watch('client/**/*.hbs', ['handlebars'])
   gulp.watch('server/**/*.ts', ['scripts'])

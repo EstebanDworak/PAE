@@ -1,53 +1,44 @@
-import * as debug from 'debug'
-import * as http from 'http'
+import * as debug from "debug";
+import * as http from "http";
+import * as bodyParser from "body-parser";
+import * as express from "express";
+import * as exphbs from "express-handlebars";
+import * as logger from "morgan";
+import * as path from "path";
 
-import App from './App'
+import HomeRouter from "./routes/HomeRouter";
 
-debug('ts-express:server')
+const app = express();
 
-const PORT = normalizePort(process.env.PORT || 3000)
-App.set('port', PORT)
 
-const server = http.createServer(App)
-server.listen(PORT)
-server.on('error', onError)
-server.on('listening', onListening)
+app.use(logger("dev"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static("public"));
 
-function normalizePort(val: number|string): number|string|boolean {
-  const port: number = (typeof val === 'string') ? parseInt(val, 10) : val
+// Handlebars configuration
+app.set("views", "client/views");
+app.engine(
+  ".hbs",
+  exphbs({
+    defaultLayout: "main",
+    extname: ".hbs",
+    layoutsDir: "client/views/layouts",
+    partialsDir: "client/views/partials",
+  })
+);
+app.set("view engine", ".hbs");
 
-  if (isNaN(port)) {
-    return val
-  } else if (port >= 0) {
-    return port
-  } else {
-    return false
-  }
-}
 
-function onError(error: NodeJS.ErrnoException): void {
-  if (error.syscall !== 'listen') {
-    throw error
-  }
+// Router configuration
+const router = express.Router();
+app.use("/", HomeRouter);
 
-  const bind = (typeof PORT === 'string') ? 'Pipe ' + PORT : 'Port ' + PORT
+// Create web server
+const PORT = process.env.PORT || 3000;
+app.set("port", PORT);
+const server = http.createServer(app);
+server.listen(PORT,()=>{
+  debug(`Listening on ${PORT}.`);
+});
 
-  switch (error.code) {
-    case 'EACCES':
-      console.error(`${bind} requires elevated privileges.`)
-      process.exit(1)
-      break;
-    case 'EADDRINUSE':
-      console.error(`${bind} is already in use.`)
-      process.exit(1)
-      break;
-    default:
-      throw error
-  }
-}
-
-function onListening(): void {
-  const addr = server.address()
-  const bind = (typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`)
-  debug(`Listening on ${bind}.`)
-}
